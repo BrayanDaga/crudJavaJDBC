@@ -51,10 +51,10 @@ public class ProductoDAO {
 		List<Producto> resultado = new ArrayList<>();
 
 		try {
-			var mySql = "SELECT P.ID , P.NOMBRE, P.DESCRIPCION, P.CANTIDAD, C.NOMBRE  FROM PRODUCTO P LEFT  JOIN CATEGORIA C ON P.CATEGORIA_ID = C.ID";
+			// var mySql = "SELECT P.ID , P.NOMBRE, P.DESCRIPCION, P.CANTIDAD, C.NOMBRE FROM
+			// PRODUCTO P LEFT JOIN CATEGORIA C ON P.CATEGORIA_ID = C.ID";
 			var querySelect = "SELECT ID, NOMBRE, DESCRIPCION, CANTIDAD , CATEGORIA_ID FROM PRODUCTO";
-			System.out.println(mySql);
-			final PreparedStatement statement = con.prepareStatement(mySql);
+			final PreparedStatement statement = con.prepareStatement(querySelect);
 
 			try (statement) {
 				statement.execute();
@@ -63,12 +63,8 @@ public class ProductoDAO {
 
 				try (resultSet) {
 					while (resultSet.next()) {
-						resultado.add(new Producto(
-								resultSet.getInt("P.ID"),
-								resultSet.getString("P.NOMBRE"),
-								resultSet.getString("P.DESCRIPCION"),
-								resultSet.getInt("P.CANTIDAD"),
-								resultSet.getString("C.NOMBRE")));
+						resultado.add(new Producto(resultSet.getInt("ID"), resultSet.getString("NOMBRE"),
+								resultSet.getString("DESCRIPCION"), resultSet.getInt("CANTIDAD")));
 					}
 				}
 			}
